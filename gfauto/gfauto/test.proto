@@ -1,0 +1,63 @@
+// Copyright 2019 The GraphicsFuzz Project Authors
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package gfauto;
+
+import "gfauto/common.proto";
+import "gfauto/device.proto";
+
+// A test directory (test_dir) contains a Test proto in "test.json", plus the reference and variant shader jobs.
+// A Test proto contains all the information needed to execute a test on a specific device, plus the crash signature
+// for detecting if the result is interesting (i.e. the bug reproduces).
+message Test {
+  oneof test {
+    TestGlsl glsl = 1;
+    TestSpirvFuzz spirv_fuzz = 5;
+  }
+  string crash_signature = 2;
+  Device device = 3;
+  repeated Binary binaries = 4;
+  // The expected status when running the test. E.g. CRASH, TOOL_CRASH, TIMEOUT. See fuzz.py.
+  string expected_status = 6;
+
+  // If set, this Python regular expression will be used instead of the crash_signature. The regular expression
+  // will be matched against the log from running the test. E.g. ".*some_error_string.*"
+  // This is useful for nondeterministic bugs.
+  string crash_regex_override = 7;
+
+  // If true, don't run spirv-val to validate SPIR-V at every stage. This can be useful if the validator rejects the
+  // SPIR-V you want to test, but you want to continue anyway e.g. because the validator is buggy or because you know
+  // the tool under test should handle the invalid SPIR-V.
+  bool skip_validation = 8;
+
+  // If set, this indicates the source of the test. Most often this will be set to a shader name from the shaders
+  // included with GraphicsFuzz that was used as the reference shader. For example, "colorgrid_modulo".
+  string derived_from = 9;
+
+  // These arguments will be passed to any tool that accepts common spirv-val arguments. Supported arguments include:
+  // --scalar-block-layout, --skip-block-layout, etc. Tools include: spirv-val, spirv-opt, spirv-fuzz, and spirv-reduce.
+  // This field is typically used to relax SPIR-V validation.
+  repeated string common_spirv_args = 10;
+}
+
+message TestGlsl {
+  repeated string spirv_opt_args = 1;
+}
+
+// Spirv-fuzz generated spirv test.
+message TestSpirvFuzz {
+  repeated string spirv_opt_args = 1;
+}

@@ -1,0 +1,419 @@
+<!--
+Copyright 2018 The GraphicsFuzz Project Authors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>assembly-binaries</artifactId>
+  <name>assembly-binaries</name>
+  <packaging>pom</packaging>
+
+  <parent>
+    <groupId>com.graphicsfuzz</groupId>
+    <artifactId>parent-all</artifactId>
+    <version>1.0</version>
+    <relativePath>../parent-all/pom.xml</relativePath>
+  </parent>
+
+  <repositories>
+    <repository>
+      <id>build-angle</id>
+      <url>https://github.com/paulthomson/build-angle/releases/download</url>
+    </repository>
+
+    <repository>
+      <id>build-swiftshader</id>
+      <url>https://github.com/paulthomson/build-swiftshader/releases/download</url>
+    </repository>
+
+    <repository>
+      <id>build-glslang</id>
+      <url>https://github.com/paulthomson/build-glslang/releases/download</url>
+    </repository>
+
+    <repository>
+      <id>get-image-glsl</id>
+      <url>https://github.com/mc-imperial/get-image-glsl/releases/download</url>
+    </repository>
+
+    <repository>
+      <id>gfbuild-SPIRV-Tools</id>
+      <url>https://github.com/google/gfbuild-SPIRV-Tools/releases/download</url>
+    </repository>
+
+  </repositories>
+
+  <properties>
+    <spirv-tools-version>bd2a9ea85210d3bb474bc5adb9ff4b0bb536b4fc</spirv-tools-version>
+    <angle-version>9d3202492d78aae5ced08ff14679b81c98d71c15</angle-version>
+    <swiftshader-version>0565d5aee279a4782689297ada0aa2489e24ad3e</swiftshader-version>
+    <glslang-version>0f167ce7125795df62ae5893f553e5608c9652f4</glslang-version>
+    <getimage-version>d987dc0e5f8aeae0dc2f5aac2013e9a3edd54465</getimage-version>
+  </properties>
+
+  <dependencies>
+
+    <!-- build-angle -->
+    <dependency>
+      <groupId>github.paulthomson</groupId>
+      <artifactId>build-angle</artifactId>
+      <version>${angle-version}</version>
+      <classifier>Linux_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <dependency>
+      <groupId>github.paulthomson</groupId>
+      <artifactId>build-angle</artifactId>
+      <version>${angle-version}</version>
+      <classifier>Mac_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <dependency>
+      <groupId>github.paulthomson</groupId>
+      <artifactId>build-angle</artifactId>
+      <version>${angle-version}</version>
+      <classifier>Windows_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <!-- build-swiftshader -->
+    <dependency>
+      <groupId>github.paulthomson</groupId>
+      <artifactId>build-swiftshader</artifactId>
+      <version>${swiftshader-version}</version>
+      <classifier>Linux_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <dependency>
+      <groupId>github.paulthomson</groupId>
+      <artifactId>build-swiftshader</artifactId>
+      <version>${swiftshader-version}</version>
+      <classifier>Mac_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <dependency>
+      <groupId>github.paulthomson</groupId>
+      <artifactId>build-swiftshader</artifactId>
+      <version>${swiftshader-version}</version>
+      <classifier>Windows_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <!-- build-glslang -->
+    <dependency>
+      <groupId>github.paulthomson</groupId>
+      <artifactId>build-glslang</artifactId>
+      <version>${glslang-version}</version>
+      <classifier>Linux_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <dependency>
+      <groupId>github.paulthomson</groupId>
+      <artifactId>build-glslang</artifactId>
+      <version>${glslang-version}</version>
+      <classifier>Mac_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <dependency>
+      <groupId>github.paulthomson</groupId>
+      <artifactId>build-glslang</artifactId>
+      <version>${glslang-version}</version>
+      <classifier>Windows_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <!-- get-image-glsl -->
+    <dependency>
+      <groupId>github.mc-imperial</groupId>
+      <artifactId>get-image-glsl</artifactId>
+      <version>${getimage-version}</version>
+      <classifier>Linux_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <dependency>
+      <groupId>github.mc-imperial</groupId>
+      <artifactId>get-image-glsl</artifactId>
+      <version>${getimage-version}</version>
+      <classifier>Mac_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <dependency>
+      <groupId>github.mc-imperial</groupId>
+      <artifactId>get-image-glsl</artifactId>
+      <version>${getimage-version}</version>
+      <classifier>Windows_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <!-- build-SPIRV-Tools -->
+    <dependency>
+      <groupId>github.google</groupId>
+      <artifactId>gfbuild-SPIRV-Tools</artifactId>
+      <version>${spirv-tools-version}</version>
+      <classifier>Linux_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <dependency>
+      <groupId>github.google</groupId>
+      <artifactId>gfbuild-SPIRV-Tools</artifactId>
+      <version>${spirv-tools-version}</version>
+      <classifier>Mac_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <dependency>
+      <groupId>github.google</groupId>
+      <artifactId>gfbuild-SPIRV-Tools</artifactId>
+      <version>${spirv-tools-version}</version>
+      <classifier>Windows_x64_Release</classifier>
+      <type>zip</type>
+    </dependency>
+
+    <!-- others -->
+
+    <dependency>
+      <groupId>com.graphicsfuzz</groupId>
+      <artifactId>shaders</artifactId>
+      <type>zip</type>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>ant-contrib</groupId>
+      <artifactId>ant-contrib</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+
+  </dependencies>
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>com.graphicsfuzz</groupId>
+            <artifactId>zip-helper</artifactId>
+            <version>1.0</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>run-ant</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${ant-contrib:ant-contrib:jar}"/>
+
+                <property name="shaders-zip" value="${com.graphicsfuzz:shaders:zip}"/>
+
+
+                <property name="assembly-zip" value="${project.build.directory}/${project.artifactId}-${project.version}.zip"/>
+                <property name="assembly-dir" value="${project.build.directory}/${project.artifactId}-${project.version}"/>
+
+                <property name="touched-file" value="${project.build.directory}/touched.txt"/>
+
+                <outofdate>
+                  <sourcefiles>
+                    <pathelement location="${shaders-zip}"/>
+
+                    <!-- build-angle -->
+                    <pathelement
+                        location="${github.paulthomson:build-angle:zip:Windows_x64_Release}"/>
+                    <pathelement
+                        location="${github.paulthomson:build-angle:zip:Mac_x64_Release}"/>
+                    <pathelement
+                        location="${github.paulthomson:build-angle:zip:Linux_x64_Release}"/>
+
+                    <!-- build-swiftshader -->
+                    <pathelement
+                        location="${github.paulthomson:build-swiftshader:zip:Windows_x64_Release}"/>
+                    <pathelement
+                        location="${github.paulthomson:build-swiftshader:zip:Mac_x64_Release}"/>
+                    <pathelement
+                        location="${github.paulthomson:build-swiftshader:zip:Linux_x64_Release}"/>
+
+                    <!-- build-glslang -->
+                    <pathelement
+                        location="${github.paulthomson:build-glslang:zip:Windows_x64_Release}"/>
+                    <pathelement
+                        location="${github.paulthomson:build-glslang:zip:Mac_x64_Release}"/>
+                    <pathelement
+                        location="${github.paulthomson:build-glslang:zip:Linux_x64_Release}"/>
+
+                    <!-- get-image-glsl -->
+                    <pathelement
+                        location="${github.mc-imperial:get-image-glsl:zip:Windows_x64_Release}"/>
+                    <pathelement
+                        location="${github.mc-imperial:get-image-glsl:zip:Mac_x64_Release}"/>
+                    <pathelement
+                        location="${github.mc-imperial:get-image-glsl:zip:Linux_x64_Release}"/>
+
+                    <!-- build-SPIRV-Tools -->
+                    <pathelement
+                        location="${github.google:gfbuild-SPIRV-Tools:zip:Windows_x64_Release}"/>
+                    <pathelement
+                        location="${github.google:gfbuild-SPIRV-Tools:zip:Mac_x64_Release}"/>
+                    <pathelement
+                        location="${github.google:gfbuild-SPIRV-Tools:zip:Linux_x64_Release}"/>
+
+                  </sourcefiles>
+                  <targetfiles path="${touched-file}"/>
+                  <sequential>
+                    <delete file="${assembly-zip}" dir="${assembly-dir}"/>
+
+                    <java classname="com.graphicsfuzz.zip.ZipFromZip">
+                      <arg value="${assembly-zip}"/>
+
+                      <arg value="${shaders-zip}"/>
+                      <arg value="(.*)"/>
+                      <arg value="shaders/$1"/>
+
+                      <!-- build-angle -->
+                      <arg value="${github.paulthomson:build-angle:zip:Linux_x64_Release}"/>
+                      <arg value="bin/(.+)"/>
+                      <arg value="bin/Linux/$1"/>
+                      <arg value="${github.paulthomson:build-angle:zip:Linux_x64_Release}"/>
+                      <arg value="lib/(.+)"/>
+                      <arg value="bin/Linux/angle/$1"/>
+
+                      <arg value="${github.paulthomson:build-angle:zip:Mac_x64_Release}"/>
+                      <arg value="bin/(.+)"/>
+                      <arg value="bin/Mac/$1"/>
+                      <arg value="${github.paulthomson:build-angle:zip:Mac_x64_Release}"/>
+                      <arg value="lib/(.+)"/>
+                      <arg value="bin/Mac/angle/$1"/>
+
+                      <arg value="${github.paulthomson:build-angle:zip:Windows_x64_Release}"/>
+                      <arg value="bin/(.+)"/>
+                      <arg value="bin/Windows/$1"/>
+                      <arg value="${github.paulthomson:build-angle:zip:Windows_x64_Release}"/>
+                      <arg value="lib/(.+)"/>
+                      <arg value="bin/Windows/angle/$1"/>
+
+                      <!-- build-swiftshader -->
+                      <arg value="${github.paulthomson:build-swiftshader:zip:Linux_x64_Release}"/>
+                      <arg value="bin/(.+)"/>
+                      <arg value="bin/Linux/$1"/>
+                      <arg value="${github.paulthomson:build-swiftshader:zip:Linux_x64_Release}"/>
+                      <arg value="lib/(.+)"/>
+                      <arg value="bin/Linux/swiftshader/$1"/>
+
+                      <arg value="${github.paulthomson:build-swiftshader:zip:Mac_x64_Release}"/>
+                      <arg value="bin/(.+)"/>
+                      <arg value="bin/Mac/$1"/>
+                      <arg value="${github.paulthomson:build-swiftshader:zip:Mac_x64_Release}"/>
+                      <arg value="lib/(.+)"/>
+                      <arg value="bin/Mac/swiftshader/$1"/>
+
+                      <arg value="${github.paulthomson:build-swiftshader:zip:Windows_x64_Release}"/>
+                      <arg value="bin/(.+)"/>
+                      <arg value="bin/Windows/$1"/>
+                      <arg value="${github.paulthomson:build-swiftshader:zip:Windows_x64_Release}"/>
+                      <arg value="lib/(.+)"/>
+                      <arg value="bin/Windows/swiftshader/$1"/>
+
+                      <!-- build-glslang -->
+                      <arg value="${github.paulthomson:build-glslang:zip:Linux_x64_Release}"/>
+                      <arg value="bin/(.+)"/>
+                      <arg value="bin/Linux/$1"/>
+
+                      <arg value="${github.paulthomson:build-glslang:zip:Mac_x64_Release}"/>
+                      <arg value="bin/(.+)"/>
+                      <arg value="bin/Mac/$1"/>
+
+                      <arg value="${github.paulthomson:build-glslang:zip:Windows_x64_Release}"/>
+                      <arg value="bin/(.+)"/>
+                      <arg value="bin/Windows/$1"/>
+
+                      <!-- get-image-glsl (note: lines below are quite different from the rest) -->
+                      <arg value="${github.mc-imperial:get-image-glsl:zip:Linux_x64_Release}"/>
+                      <arg value="bin/(get_image_glfw.*)"/>
+                      <arg value="bin/Linux/$1"/>
+                      <arg value="${github.mc-imperial:get-image-glsl:zip:Linux_x64_Release}"/>
+                      <arg value="bin/(get_image_egl.*)"/>
+                      <arg value="bin/Linux/angle/$1"/>
+                      <arg value="${github.mc-imperial:get-image-glsl:zip:Linux_x64_Release}"/>
+                      <arg value="bin/(get_image_egl.*)"/>
+                      <arg value="bin/Linux/swiftshader/$1"/>
+
+                      <arg value="${github.mc-imperial:get-image-glsl:zip:Mac_x64_Release}"/>
+                      <arg value="bin/(get_image_glfw.*)"/>
+                      <arg value="bin/Mac/$1"/>
+                      <arg value="${github.mc-imperial:get-image-glsl:zip:Mac_x64_Release}"/>
+                      <arg value="bin/(get_image_egl.*)"/>
+                      <arg value="bin/Mac/angle/$1"/>
+                      <arg value="${github.mc-imperial:get-image-glsl:zip:Mac_x64_Release}"/>
+                      <arg value="bin/(get_image_egl.*)"/>
+                      <arg value="bin/Mac/swiftshader/$1"/>
+
+                      <arg value="${github.mc-imperial:get-image-glsl:zip:Windows_x64_Release}"/>
+                      <arg value="bin/(get_image_glfw.*)"/>
+                      <arg value="bin/Windows/$1"/>
+                      <arg value="${github.mc-imperial:get-image-glsl:zip:Windows_x64_Release}"/>
+                      <arg value="bin/(get_image_egl.*)"/>
+                      <arg value="bin/Windows/angle/$1"/>
+                      <arg value="${github.mc-imperial:get-image-glsl:zip:Windows_x64_Release}"/>
+                      <arg value="bin/(get_image_egl.*)"/>
+                      <arg value="bin/Windows/swiftshader/$1"/>
+
+                      <!-- gfbuild-SPIRV-Tools -->
+                      <arg value="${github.google:gfbuild-SPIRV-Tools:zip:Linux_x64_Release}"/>
+                      <arg value="bin/(.+)"/>
+                      <arg value="bin/Linux/$1"/>
+
+                      <arg value="${github.google:gfbuild-SPIRV-Tools:zip:Mac_x64_Release}"/>
+                      <arg value="bin/(.+)"/>
+                      <arg value="bin/Mac/$1"/>
+
+                      <arg value="${github.google:gfbuild-SPIRV-Tools:zip:Windows_x64_Release}"/>
+                      <arg value="bin/(.+)"/>
+                      <arg value="bin/Windows/$1"/>
+
+                    </java>
+                    <unzip src="${assembly-zip}" dest="${assembly-dir}"/>
+                    <chmod perm="ugo+x" dir="${assembly-dir}/bin" includes="**" />
+                    <touch file="${touched-file}"/>
+                  </sequential>
+                </outofdate>
+
+                <attachartifact file="${assembly-zip}" type="zip"/>
+              </target>
+            </configuration>
+          </execution>
+
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+</project>

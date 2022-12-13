@@ -1,0 +1,13 @@
+build/
+build_*/
+cmake-build-debug/
+local.properties
+gradle.properties
+.externalNativeBuild/
+.gradle/
+.idea/
+*.iml
+GPATH
+GTAGS
+GRTAGS
+TAGS

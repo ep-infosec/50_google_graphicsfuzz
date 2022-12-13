@@ -1,0 +1,105 @@
+// Copyright 2019 The GraphicsFuzz Project Authors
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package gfauto;
+
+import "gfauto/common.proto";
+import "gfauto/device.proto";
+
+
+// A fuzzing session requires a Settings proto stored in "settings.json".
+// Default values are defined in settings_util.py.
+message Settings {
+  // A list of devices, including the list of active devices names that will actually be used in this session.
+  DeviceList device_list = 1;
+
+  // A list of custom binary versions; this should rarely be set, but can be used, for example, if you want to override
+  // the default versions of some binaries for all devices. It is probably more common to specify binaries for certain
+  // devices.
+  repeated Binary custom_binaries = 2;
+
+  // Allow at most this many duplicate crashes per device.
+  // If 0 (the protobuf default value), a different default value will actually be used, as determined by gfauto.
+  uint32 maximum_duplicate_crashes = 3;
+
+  // Store at most this many fuzzing failure files.
+  uint32 maximum_fuzz_failures = 4;
+
+  // Reduce tool crashes. E.g. spirv-opt or glslangValidator crashes. You can disable this if you would rather focus on
+  // bugs in your actual test device.
+  bool reduce_tool_crashes = 5;
+
+  // Reduce crashes. E.g. shader compilation errors, shader compilation crashes, runtime crashes.
+  bool reduce_crashes = 6;
+
+  // Reduce bad images. E.g. your test device renders an incorrect image.
+  bool reduce_bad_images = 7;
+
+  // A list of built-in binary versions that will be generated automatically.
+  repeated Binary latest_binary_versions = 8;
+
+  // Extra arguments to pass to the GraphicsFuzz generator.
+  repeated string extra_graphics_fuzz_generate_args = 9;
+
+  // Extra arguments to pass to the GraphicsFuzz reducer.
+  repeated string extra_graphics_fuzz_reduce_args = 10;
+
+  // If non-empty, only reduce a report if the crash signature matches this regular expression.
+  string only_reduce_signature_regex = 11;
+
+  // Comment that links to documentation for this proto.
+  string _comment = 12;
+
+  // Extra arguments to pass to spirv-fuzz during fuzzing (i.e. shader generation).
+  repeated string extra_spirv_fuzz_generate_args = 13;
+
+  // Extra arguments to pass to spirv-fuzz during shrinking.
+  repeated string extra_spirv_fuzz_shrink_args = 14;
+
+  // Extra arguments to pass to spirv-reduce.
+  repeated string extra_spirv_reduce_args = 15;
+
+  // These arguments will be passed to any tool that accepts common spirv-val arguments. Supported arguments include:
+  // --scalar-block-layout, --skip-block-layout, etc. Tools include: spirv-val, spirv-opt, spirv-fuzz, and spirv-reduce.
+  // This field is typically used to relax SPIR-V validation.
+  // This field is essentially ONLY used for shader fuzzing/generation and then simply written to the test metadata,
+  // so the test remains self-contained. When running or reducing a test, the field from the test metadata is used.
+  repeated string common_spirv_args = 16;
+
+  // If true, pass "--generate-uniform-bindings" to the GraphicsFuzz PrepareReference and Generate tools.
+  // This is needed for older versions of GraphicsFuzz.
+  // Otherwise, "--vulkan" is passed.
+  bool legacy_graphics_fuzz_vulkan_arg = 17;
+
+  // If true then the semantics changing reduction is skipped.
+  // We always perform a semantics preserving reduction first, which involves removing transformations from the variant
+  // shader. If the bug is a crash and this option is false then we continue by performing a semantics changing
+  // reduction, which involves removing chunks of arbitrary code from the variant shader.
+  bool skip_semantics_changing_reduction = 18;
+
+  // If true, then only use `spirv-opt -O ...` to enhance tests. Once we have a SPIR-V test from a fuzzer, we also
+  // generate some additional tests by running spirv-opt with `-O`, `-Os`, and three sets of randomly chosen flags, on
+  // the shaders. The `-O` flag is the best-supported configuration. The other flags may provide limited benefit at the
+  // cost of having to run 4 extra tests per fuzzed test. Thus, setting |spirv_opt_just_o| to true can save a lot of
+  // time while still enhancing the fuzzed test.
+  bool spirv_opt_just_o = 19;
+
+  // If true, then preserve the temporary reduction work directories used when performing a reduction.
+  // These directories are useful for debugging reduction issues, but are otherwise not very useful and take up
+  // a lot of space.
+  bool keep_reduction_work = 20;
+
+}
